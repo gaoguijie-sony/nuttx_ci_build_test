@@ -84,4 +84,4 @@ jobs:
         with:
           name: test finish
           path: |
-            report.md
+            ~/report.md
