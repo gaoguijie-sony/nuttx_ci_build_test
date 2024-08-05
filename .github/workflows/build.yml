@@ -62,3 +62,17 @@ jobs:
             nuttx/nuttx.bin
             nuttx/nuttx.map
             nuttx/System.map
+
+  test:
+    name: self hosted runner-job1
+    runs-on: self-hosted  # 第二步在自托管的runner上运行
+    needs: build  # 依赖第一步完成
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build_output  # 下载artifacts中的log文件
+      - name: Flash nuttx
+        run: |
+          ls -l
+          curl http://localhost:1880/startOSTest
