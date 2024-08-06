@@ -75,7 +75,7 @@ jobs:
       - name: Flash nuttx
         run: |
           pwd
-          ls -l
+          ls -a
           ./start_test.sh
 
       - name: Upload test report
