@@ -74,7 +74,6 @@ jobs:
           name: build_output
       - name: Flash nuttx
         run: |
-          pwd
           ls -a
           ./start_test.sh
 
