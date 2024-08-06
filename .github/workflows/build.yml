@@ -64,7 +64,7 @@ jobs:
             nuttx/System.map
 
   test:
-    name: self hosted runner-job1
+    name: self hosted runner start test
     runs-on: self-hosted
     needs: build
     steps:
