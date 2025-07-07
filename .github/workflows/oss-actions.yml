@@ -22,8 +22,8 @@ jobs:
           access-key-secret: ${{ secrets.ALIYUN_ACCESS_KEY_SECRET }}
           endpoint: ${{ secrets.ALIYUN_OSS_ENDPOINT }}
           bucket: ${{ secrets.ALIYUN_OSS_BUCKET }}
-          source: ./path/to/local/file  # 替换为要上传的本地文件路径
-          target: /path/in/oss/  # 替换为 OSS 目标路径
+          source: /home/user/actions-runner/actions-runner-linux-x64-2.325.0.tar.gz   # 替换为要上传的本地文件路径
+          target: /github-action  # 替换为 OSS 目标路径
 
       # 从阿里云 OSS 下载文件
       - name: Download from OSS
@@ -33,5 +33,5 @@ jobs:
           access-key-secret: ${{ secrets.ALIYUN_ACCESS_KEY_SECRET }}
           endpoint: ${{ secrets.ALIYUN_OSS_ENDPOINT }}
           bucket: ${{ secrets.ALIYUN_OSS_BUCKET }}
-          source: /path/in/oss/file  # 替换为 OSS 中要下载的文件路径
-          target: ./path/to/local/directory  # 替换为本地目标目录
+          source: /github-action/bootstrap.zip  # 替换为 OSS 中要下载的文件路径
+          target: /home/user/actions-runner/  # 替换为本地目标目录
