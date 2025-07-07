@@ -44,9 +44,9 @@ jobs:
           cat downloaded-file.txt
 
       # 6. 清理演示文件（可选）
-      - name: Clean up OSS files
-        if: always()  # 即使失败也执行清理
-        run: |
-          # 删除测试文件
-          ossutil rm oss://${{ secrets.ALIYUN_OSS_BUCKET }}/test/uploaded-file.txt
-          ossutil rm oss://${{ secrets.ALIYUN_OSS_BUCKET }}/test/download-target.txt
+#      - name: Clean up OSS files
+#        if: always()  # 即使失败也执行清理
+#        run: |
+#          # 删除测试文件
+#          ossutil rm oss://${{ secrets.ALIYUN_OSS_BUCKET }}/test/uploaded-file.txt
+#          ossutil rm oss://${{ secrets.ALIYUN_OSS_BUCKET }}/test/download-target.txt
