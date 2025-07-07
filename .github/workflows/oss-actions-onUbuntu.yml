@@ -1,0 +1,52 @@
+name: OSS Upload and Download Demo
+on:
+  workflow_dispatch:  # 手动触发工作流
+
+jobs:
+  oss-demo:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. 检出代码
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. 创建测试文件（实际使用时替换为你的真实文件）
+      - name: Create sample files
+        run: |
+          echo "This is a test file for OSS upload" > upload.txt
+          echo "File to download: $(date)" > download-source.txt
+
+      # 3. 安装并配置 ossutil
+      - name: Setup OSS tool
+        uses: manyuanrong/setup-ossutil@master
+        with:
+          endpoint: ${{ secrets.ALIYUN_OSS_ENDPOINT }}  # 例如: oss-cn-beijing.aliyuncs.com
+          access-key-id: ${{ secrets.ALIYUN_ACCESS_KEY_ID }}
+          access-key-secret: ${{ secrets.ALIYUN_ACCESS_KEY_SECRET }}
+
+      # 4. 上传文件到 OSS
+      - name: Upload file to OSS
+        run: |
+          # 上传 upload.txt 到 bucket 的 test/ 目录
+          ossutil cp upload.txt oss://${{ secrets.ALIYUN_OSS_BUCKET }}/test/uploaded-file.txt
+          
+          # 上传另一个文件用于后续下载测试
+          ossutil cp download-source.txt oss://${{ secrets.ALIYUN_OSS_BUCKET }}/test/download-target.txt
+
+      # 5. 从 OSS 下载文件
+      - name: Download file from OSS
+        run: |
+          # 下载之前上传的文件
+          ossutil cp oss://${{ secrets.ALIYUN_OSS_BUCKET }}/test/download-target.txt downloaded-file.txt
+          
+          # 验证下载的文件内容
+          echo "Downloaded file content:"
+          cat downloaded-file.txt
+
+      # 6. 清理演示文件（可选）
+      - name: Clean up OSS files
+        if: always()  # 即使失败也执行清理
+        run: |
+          # 删除测试文件
+          ossutil rm oss://${{ secrets.ALIYUN_OSS_BUCKET }}/test/uploaded-file.txt
+          ossutil rm oss://${{ secrets.ALIYUN_OSS_BUCKET }}/test/download-target.txt
