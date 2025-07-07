@@ -1,0 +1,33 @@
+name: Upload and Download from Alibaba Cloud OSS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  oss-operations:
+    # 修改为自托管运行器的标签，这里假设标签为 self-hosted
+    runs-on: self-hosted
+
+    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v4
+
+      # 上传文件到阿里云 OSS
+      - name: Upload to OSS
+        run: |
+          ossutil config -e ${{ secrets.ALIYUN_OSS_ENDPOINT }} -i ${{ secrets.ALIYUN_ACCESS_KEY_ID }} -k ${{ secrets.ALIYUN_ACCESS_KEY_SECRET }} -L CH -c ~/.ossutilconfig
+          ossutil cp /home/user/actions-runner/actions-runner-linux-x64-2.325.0.tar.gz oss://${{ secrets.ALIYUN_OSS_BUCKET }}/github-action/ --force
+        env:
+          ALICLOUD_ACCESS_KEY: ${{ secrets.ALIYUN_ACCESS_KEY_ID }}
+          ALICLOUD_SECRET_KEY: ${{ secrets.ALIYUN_ACCESS_KEY_SECRET }}
+
+      # 从阿里云 OSS 下载文件
+      - name: Download from OSS
+        run: |
+          ossutil config -e ${{ secrets.ALIYUN_OSS_ENDPOINT }} -i ${{ secrets.ALIYUN_ACCESS_KEY_ID }} -k ${{ secrets.ALIYUN_ACCESS_KEY_SECRET }} -L CH -c ~/.ossutilconfig
+          ossutil cp oss://${{ secrets.ALIYUN_OSS_BUCKET }}/github-action/bootstrap.zip /home/user/actions-runner/ --force
+        env:
+          ALICLOUD_ACCESS_KEY: ${{ secrets.ALIYUN_ACCESS_KEY_ID }}
+          ALICLOUD_SECRET_KEY: ${{ secrets.ALIYUN_ACCESS_KEY_SECRET }}
