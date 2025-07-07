@@ -11,8 +11,8 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+#      - name: Checkout code
+#        uses: actions/checkout@v4
 
       # 上传文件到阿里云 OSS
       - name: Upload to OSS
@@ -26,12 +26,12 @@ jobs:
           target: /github-action  # 替换为 OSS 目标路径
 
       # 从阿里云 OSS 下载文件
-      - name: Download from OSS
-        uses: aliyun/aliyun-oss-download-action@v1
-        with:
-          access-key-id: ${{ secrets.ALIYUN_ACCESS_KEY_ID }}
-          access-key-secret: ${{ secrets.ALIYUN_ACCESS_KEY_SECRET }}
-          endpoint: ${{ secrets.ALIYUN_OSS_ENDPOINT }}
-          bucket: ${{ secrets.ALIYUN_OSS_BUCKET }}
-          source: /github-action/bootstrap.zip  # 替换为 OSS 中要下载的文件路径
-          target: /home/user/actions-runner/  # 替换为本地目标目录
+#      - name: Download from OSS
+#        uses: aliyun/aliyun-oss-download-action@v1
+#        with:
+#          access-key-id: ${{ secrets.ALIYUN_ACCESS_KEY_ID }}
+#          access-key-secret: ${{ secrets.ALIYUN_ACCESS_KEY_SECRET }}
+#          endpoint: ${{ secrets.ALIYUN_OSS_ENDPOINT }}
+#          bucket: ${{ secrets.ALIYUN_OSS_BUCKET }}
+#          source: /github-action/bootstrap.zip  # 替换为 OSS 中要下载的文件路径
+#          target: /home/user/actions-runner/  # 替换为本地目标目录
