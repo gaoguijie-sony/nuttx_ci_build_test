@@ -30,8 +30,6 @@ jobs:
       - name: Flash nuttx
         run: |
           pwd
-          ls -a
-          ./system_info_test.sh
           zip -r report.zip /home/user/actions-runner/flash_images/*
 
       - name: Upload test report
