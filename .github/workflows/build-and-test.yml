@@ -18,9 +18,9 @@ jobs:
           name: build_output
           path: build.txt
 
-  test:
-    name: self hosted runner start test
-    runs-on: self-hosted
+  test_wamr_other_bin:
+    name: start test other bin
+    runs-on: [self-hosted, wasm-other-bin]
     needs: build
     steps:
       - name: Download artifact
@@ -28,7 +28,7 @@ jobs:
         with:
           name: build_output
 
-      - name: Flash nuttx
+      - name: Flash other bin
         run: |
           pwd
           zip -r report.zip flash_images/*
@@ -36,6 +36,28 @@ jobs:
       - name: Upload test report
         uses: actions/upload-artifact@v4.3.3
         with:
-          name: test finish
+          name: test_finish
           path: |
             report.zip
+
+  test_wamr_wasi_bin:
+    name: start test wasi bin
+    runs-on: [self-hosted, wasm-wasi-bin]
+    needs: build
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build_output
+
+      - name: Flash wasi bin
+        run: |
+          pwd
+          zip -r report-wasi.zip flash_images/*
+
+      - name: Upload test report
+        uses: actions/upload-artifact@v4.3.3
+        with:
+          name: test_finish
+          path: |
+            report-wasi.zip
