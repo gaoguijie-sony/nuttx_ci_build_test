@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: build nuttx
+      - name: build
         run: |
           pwd
           touch build.txt
@@ -26,7 +26,8 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: build_download
+          name: build_output
+
       - name: Flash nuttx
         run: |
           pwd
