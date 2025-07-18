@@ -10,6 +10,7 @@ jobs:
     steps:
       - name: build nuttx
         run: |
+        pwd
          ls -a
       - name:  Upload a Build Artifact2
         uses: actions/upload-artifact@v4.3.3
@@ -28,8 +29,10 @@ jobs:
           name: build_download
       - name: Flash nuttx
         run: |
+          pwd
           ls -a
-          ./start_test.sh
+          ./system_info_test.sh
+          zip -r report.zip /home/user/actions-runner/flash_images/*
 
       - name: Upload test report
         uses: actions/upload-artifact@v4.3.3
