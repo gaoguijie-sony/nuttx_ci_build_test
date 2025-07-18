@@ -1,0 +1,36 @@
+name: Build with local setup environment
+
+on:
+  workflow_dispatch:  # 手动触发工作流
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name:  Upload a Build Artifact2
+        uses: actions/upload-artifact@v4.3.3
+        with:
+          name: build_output
+          path: flash_images/*
+
+  test:
+    name: self hosted runner start test
+    runs-on: self-hosted
+    needs: build
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build_download
+      - name: Flash nuttx
+        run: |
+          ls -a
+          ./start_test.sh
+
+      - name: Upload test report
+        uses: actions/upload-artifact@v4.3.3
+        with:
+          name: test finish
+          path: |
+            report.zip
