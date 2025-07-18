@@ -16,7 +16,7 @@ jobs:
         uses: actions/upload-artifact@v4.3.3
         with:
           name: build_output
-          path: /home/user/actions-runner/flash_images/*
+          path: flash_images/*
 
   test:
     name: self hosted runner start test
@@ -30,7 +30,7 @@ jobs:
       - name: Flash nuttx
         run: |
           pwd
-          zip -r report.zip /home/user/actions-runner/flash_images/*
+          zip -r report.zip flash_images/*
 
       - name: Upload test report
         uses: actions/upload-artifact@v4.3.3
