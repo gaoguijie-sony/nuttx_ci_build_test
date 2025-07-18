@@ -10,8 +10,8 @@ jobs:
     steps:
       - name: build nuttx
         run: |
-        pwd
-         ls -a
+          pwd
+          ls -a
       - name:  Upload a Build Artifact2
         uses: actions/upload-artifact@v4.3.3
         with:
